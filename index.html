@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>BFC</title>
+        <script>
+            function calculateBodyFat(event) {
+                event.preventDefault();
+
+                var gender = document.querySelector('input[name="gender"]:checked').value;
+                var neck = parseFloat(document.getElementById("neck").value);
+                var waist = parseFloat(document.getElementById("waist").value);
+                var height = parseFloat(document.getElementById("height").value);
+                var hips = parseFloat(document.getElementById("hips").value);
+
+                var bodyFatPercentage;
+
+                if (gender === "Male") {
+                    bodyFatPercentage = 86.010 * Math.log10(waist - neck) - 70.041 * Math.log10(height) + 36.76;
+                } else if (gender === "Female") {
+                    bodyFatPercentage = 163.205 * Math.log10(waist + hips - neck) - 97.684 * Math.log10(height) - 78.387;
+                }
+
+                document.getElementById("result").innerHTML = "Body Fat Percentage: " + bodyFatPercentage.toFixed(2) + "%";
+            }
+        </script>
+        <style>
+            body {
+                background-image: url('fat.jpeg');
+                background-repeat: round;
+            }
+            #outer {
+                background-color: black;
+                height: 800px;
+                width: 800px;
+                margin: 50px auto;
+                opacity: 0.9;
+                border: 10px solid rgb(247, 7, 7);
+                color: aqua;
+                text-align: center;
+            }
+            table {
+                margin: 0px 60px;
+            }
+            input {
+                border: 2px solid red;
+                margin-right: 10px;
+            }
+            #button {
+                margin: 50px;
+                width: 100px;
+                height: 50px;
+                background: linear-gradient(to right, red, blue);
+                color: burlywood;
+                font-size: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="outer">
+            <form onsubmit="calculateBodyFat(event)">
+                <h1>Body-Mass Calculator</h1>
+                <p>Just enter your Height, Waist, Neck, and Gender, and I will give you your body fat percentage.</p>
+                <table>
+                    <tr class="row">
+                        <td><b>Gender:</b></td>
+                        <td>
+                            <input type="radio" name="gender" value="Male" id="male">Male
+                            <input type="radio" name="gender" value="Female" id="female">Female
+                        </td>
+                    </tr>
+                    <tr class="row">
+                        <td>Height (in inches):</td>
+                        <td><input type="number" id="height" placeholder="Height"></td>
+                    </tr>
+                    <tr class="row">
+                        <td>Waist (in inches):</td>
+                        <td><input type="number" id="waist" placeholder="Size of waist"></td>
+                    </tr>
+                    <tr class="row">
+                        <td>Neck (in inches):</td>
+                        <td><input type="number" id="neck" placeholder="Neck size"></td>
+                    </tr>
+                    <tr class="row">
+                        <td>Hips (in inches, only for women):</td>
+                        <td><input type="number" id="hips" placeholder="Hip size"></td>
+                    </tr>
+                </table>
+                <input type="submit" id="button" value="Calculate">
+            </form>
+            <p id="result"></p>
+        </div>
+    </body>
+</html>
